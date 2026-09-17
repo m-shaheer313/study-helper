@@ -6,11 +6,23 @@ own tools and guardrails.
 
 ## Screenshots
 
-![Math routing example](docs/screenshot1.png)
+![Math Tutor routing and AST calculator tool execution](docs/math_routing_and_calculator_tool.png)
+*Math Tutor handoff triggered by front desk, displaying AST calculator execution (`Used Calculating`) and structured problem decomposition.*
 
-![Science tutor with web search](docs/screenshot2.png)
+![Science Tutor routing for conceptual physics](docs/science_routing_conceptual.png)
+*Science Tutor handoff for a conceptual physics query ("What is Gravity?"), demonstrating direct model explanation without unnecessary web search calls.*
 
-![Timed quiz with structured results](docs/screenshot3.png)
+![Error handling for API rate limits](docs/ui_error_handling_ratelimit.png)
+*Resilient Chainlit UI catching provider rate limits (`RateLimitError`) gracefully without crashing the active chat session.*
+
+![Science Tutor astronomy question routing](docs/science_astronomy_step_decomposition.png)
+*Astronomy sub-topic routing under Science Tutor, showing step-by-step physical scale comparison.*
+
+## Video Demo
+
+A full screen recording of the live Chainlit web UI in action is available:
+
+- 🎬 [Watch / Download Live UI Demo Recording (MP4, 3.6 MB)](docs/demo_recording.mp4)
 
 ## Architecture
 
@@ -127,19 +139,19 @@ a venv rebuild.
 ## Agents SDK concepts demonstrated
 
 - **Multi-agent handoffs** — `handoff()` with `input_type`, `on_handoff`, and
-  `input_filter`, plus a routing agent that declines out-of-scope work itself.
+  `input_filter`, plus a routing agent that declines out-of-scope work itself. *(Demonstrated in [Math Tutor routing](docs/math_routing_and_calculator_tool.png) and [Science Tutor routing](docs/science_routing_conceptual.png))*.
 - **Function tools** — both kinds: `calculate()` for computation and
   `web_search()` for retrieval, with `failure_error_function` so a bad expression
-  comes back to the model as a message instead of killing the run.
+  comes back to the model as a message instead of killing the run. *(Demonstrated via `Used Calculating` tool execution in [Math Tutor screenshot](docs/math_routing_and_calculator_tool.png))*.
 - **Output guardrails** — `@output_guardrail` detecting leaked answers, tripping a
-  tripwire, and passing repaired text back through `output_info`.
+  tripwire, and passing repaired text back through `output_info`. *(Demonstrated in the un-leaked "Check yourself" section in [Math Tutor](docs/math_routing_and_calculator_tool.png) & [Science Tutor](docs/science_routing_conceptual.png))*.
 - **Structured output** — Pydantic `output_type` for quiz questions, grading and
   results, using non-strict schema for provider compatibility.
 - **Lifecycle hooks** — `RunHooks` across the whole run including handoffs,
-  emitting structured events rather than printing.
+  emitting structured events rather than printing. *(Demonstrated via front-desk routing announcements like `Routing to Math Tutor` in [Math Tutor](docs/math_routing_and_calculator_tool.png) and [Science Tutor](docs/science_routing_conceptual.png))*.
 - **Sessions** — `SQLiteSession` for per-conversation memory, isolated per browser
   session in the web UI.
-- **Dual interface** — one system, a terminal client and a Chainlit web client.
+- **Dual interface** — one system, a terminal client and a Chainlit web client. *(Demonstrated across all live Chainlit web UI screenshots)*.
 
 ## Known limitations
 
